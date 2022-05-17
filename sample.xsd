@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://schemas.datacontract.org/2004/07/TestCls" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.datacontract.org/2004/07/TestCls" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:element name="TestFrame">
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element name="_count" minOccurs="0" type="xsd:int"/>
+                <xsd:element name="_list" minOccurs="0">
+                    <xsd:complexType mixed="true">
+                        <xsd:sequence>
+                            <xsd:element name="KeyValueOfguidTestFrame.AskemUVr2pI" maxOccurs="unbounded">
+                                <xsd:complexType mixed="true">
+                                    <xsd:sequence>
+                                        <xsd:element name="Key" minOccurs="0" type="xsd:normalizedString"/>
+                                        <xsd:element name="Value" minOccurs="0">
+                                            <xsd:complexType mixed="true">
+                                                <xsd:sequence>
+                                                    <xsd:element name="_count" minOccurs="0" type="xsd:int"/>
+                                                    <xsd:element name="_guid" minOccurs="0" type="xsd:normalizedString"/>
+                                                    <xsd:element name="_name" minOccurs="0" type="xsd:string"/>
+                                                    <xsd:element name="_variants" minOccurs="0">
+                                                        <xsd:complexType mixed="true">
+                                                            <xsd:sequence>
+                                                                <xsd:element name="TestFrame.Ask.Variant" maxOccurs="unbounded">
+                                                                    <xsd:complexType mixed="true">
+                                                                        <xsd:sequence>
+                                                                            <xsd:element name="_name" minOccurs="0" type="xsd:normalizedString"/>
+                                                                            <xsd:element name="_state" minOccurs="0" type="xsd:boolean"/>
+                                                                        </xsd:sequence>
+                                                                    </xsd:complexType>
+                                                                </xsd:element>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="_multione" minOccurs="0" type="xsd:boolean"/>
+                <xsd:element name="_nametest" minOccurs="0" type="xsd:normalizedString"/>
+                <xsd:element name="_pathtest" minOccurs="0" type="xsd:normalizedString"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+
+
