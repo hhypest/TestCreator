@@ -2,14 +2,14 @@
 
 namespace TestCreator
 {
-    public partial class InputFm : Form
+    internal partial class InputFm : Form
     {
-        public InputFm()
+        internal InputFm()
         {
             InitializeComponent();
         }
 
-        public IEnumerable<string> GetInputs()
+        internal IEnumerable<string> GetInputs()
             => from string input in VarBox.Lines
                where input != string.Empty
                select input;

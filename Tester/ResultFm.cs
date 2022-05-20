@@ -1,8 +1,8 @@
 ﻿namespace Tester
 {
-    public partial class ResultFm : Form
+    internal partial class ResultFm : Form
     {
-        public ResultFm((string fname, string lname) names, int count, ParallelQuery<(string ask, (string name, bool state)[] variant)> result)
+        internal ResultFm((string fname, string lname) names, int count, ParallelQuery<(string ask, (string name, bool state)[] variant)> result)
         {
             InitializeComponent();
 

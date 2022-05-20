@@ -1,15 +1,15 @@
 ﻿namespace TestCreator
 {
-    public partial class QuestFm : Form
+    internal partial class QuestFm : Form
     {
-        public QuestFm(bool multione = true)
+        internal QuestFm(bool multione = true)
         {
             InitializeComponent();
             VariantList.Tag = multione;
             Text = "Новый вопрос";
         }
 
-        public QuestFm(string ask, (string name, bool state)[] variants, bool multione = true)
+        internal QuestFm(string ask, (string name, bool state)[] variants, bool multione = true)
         {
             InitializeComponent();
             Text = ask;
@@ -22,7 +22,7 @@
                 with.Add(name).Checked = state;
         }
 
-        public (string asks, (string name, bool state)[] variants) GetValues()
+        internal (string asks, (string name, bool state)[] variants) GetValues()
         {
             IEnumerable<(string, bool)> query = from ListViewItem item in VariantList.Items
                                                 where item.Text != string.Empty

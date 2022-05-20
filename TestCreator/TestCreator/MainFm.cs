@@ -1,8 +1,8 @@
 namespace TestCreator
 {
-    public partial class MainFm : Form
+    internal partial class MainFm : Form
     {
-        public MainFm()
+        internal MainFm()
         {
             InitializeComponent();
         }

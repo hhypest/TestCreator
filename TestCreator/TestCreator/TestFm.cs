@@ -3,18 +3,18 @@ using TestCls;
 
 namespace TestCreator
 {
-    public partial class TestFm : Form
+    internal partial class TestFm : Form
     {
-        public TestFrame Test;
+        internal TestFrame Test;
 
-        public TestFm(string name, bool state)
+        internal TestFm(string name, bool state)
         {
             InitializeComponent();
             Test = new TestFrame(name, state);
             Text = $"<{name}>";
         }
 
-        public TestFm(string path)
+        internal TestFm(string path)
         {
             InitializeComponent();
 
@@ -25,7 +25,7 @@ namespace TestCreator
             UpdateTree();
         }
 
-        public void SaveTest(string path)
+        internal void SaveTest(string path)
         {
             using FileStream stream = new(path, FileMode.Create, FileAccess.Write);
             Serializer.Serialize(stream, Test);

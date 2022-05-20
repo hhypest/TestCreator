@@ -3,14 +3,14 @@ using TestCls;
 
 namespace Tester
 {
-    public partial class TestFm : Form
+    internal partial class TestFm : Form
     {
         private int Count { get; set; }
         private TestFrame Test { get; set; }
         private readonly Queue<(string ask, (string name, bool state)[] variant)> failask;
         private readonly List<(string ask, (string name, bool state)[] variant)> list;
 
-        public TestFm(string path)
+        internal TestFm(string path)
         {
             InitializeComponent();
 

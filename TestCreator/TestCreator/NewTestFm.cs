@@ -1,15 +1,15 @@
 ﻿namespace TestCreator
 {
-    public partial class NewTestFm : Form
+    internal partial class NewTestFm : Form
     {
-        public NewTestFm()
+        internal NewTestFm()
         {
             InitializeComponent();
             State = true;
             NameTest = NameBox.Text;
         }
 
-        public NewTestFm(string nametest, bool state)
+        internal NewTestFm(string nametest, bool state)
         {
             InitializeComponent();
             NameTest = nametest;
@@ -28,8 +28,8 @@
             }
         }
 
-        public string NameTest { get; set; }
-        public bool State { get; set; }
+        internal string NameTest { get; set; }
+        internal bool State { get; set; }
 
         private void MultiRadio_CheckedChanged(object sender, EventArgs e)
         {
