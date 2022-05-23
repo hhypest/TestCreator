@@ -1,4 +1,4 @@
-namespace TestCreator
+п»їnamespace TestCreator
 {
     internal partial class MainFm : Form
     {
@@ -13,8 +13,8 @@ namespace TestCreator
 
             if (child == null)
             {
-                NameTool.Text = "Открытых тестов нет";
-                PathTool.Text = "Открытых тестов нет";
+                NameTool.Text = "РћС‚РєСЂС‹С‚С‹С… С‚РµСЃС‚РѕРІ РЅРµС‚";
+                PathTool.Text = "РћС‚РєСЂС‹С‚С‹С… С‚РµСЃС‚РѕРІ РЅРµС‚";
 
                 SaveMenu.Enabled = false;
                 return;
@@ -22,7 +22,7 @@ namespace TestCreator
 
             if (string.IsNullOrEmpty(child.Test.PathTest))
             {
-                PathTool.Text = "Тест не сохранен";
+                PathTool.Text = "РўРµСЃС‚ РЅРµ СЃРѕС…СЂР°РЅРµРЅ";
                 NameTool.Text = child.Test.NameTest;
                 child.Text = child.Test.NameTest;
 
@@ -61,10 +61,10 @@ namespace TestCreator
             using OpenFileDialog openFile = new()
             {
                 RestoreDirectory = true,
-                Filter = "Тест|*.test",
+                Filter = "РўРµСЃС‚|*.test",
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Title = "Какой тест открыть?"
+                Title = "РљР°РєРѕР№ С‚РµСЃС‚ РѕС‚РєСЂС‹С‚СЊ?"
             };
 
             if (openFile.ShowDialog() != DialogResult.OK)
@@ -87,9 +87,9 @@ namespace TestCreator
             using SaveFileDialog saveFile = new()
             {
                 RestoreDirectory = true,
-                Filter = "Тест|*.test",
+                Filter = "РўРµСЃС‚|*.test",
                 FileName = $"{child.Test.NameTest}",
-                Title = $"Куда сохранить тест <{child.Test.NameTest}>"
+                Title = $"РљСѓРґР° СЃРѕС…СЂР°РЅРёС‚СЊ С‚РµСЃС‚ <{child.Test.NameTest}>"
             };
 
             if (saveFile.ShowDialog() != DialogResult.OK)
