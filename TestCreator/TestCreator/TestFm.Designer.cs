@@ -46,6 +46,10 @@
             this.RemoveAllMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.DopMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.PropertyMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ExportMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.XmlMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.JsonMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.imList = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -192,7 +196,9 @@
             // DopMenu
             // 
             this.DopMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PropertyMenu});
+            this.PropertyMenu,
+            this.toolStripSeparator3,
+            this.ExportMenu});
             this.DopMenu.Name = "DopMenu";
             this.DopMenu.Size = new System.Drawing.Size(129, 23);
             this.DopMenu.Text = "&Дополнительно";
@@ -205,6 +211,40 @@
             this.PropertyMenu.Size = new System.Drawing.Size(182, 24);
             this.PropertyMenu.Text = "Свойства теста";
             this.PropertyMenu.Click += new System.EventHandler(this.PropertyMenu_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(179, 6);
+            // 
+            // ExportMenu
+            // 
+            this.ExportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.XmlMenu,
+            this.JsonMenu});
+            this.ExportMenu.Image = global::TestCreator.Properties.Resources.loopnone;
+            this.ExportMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ExportMenu.Name = "ExportMenu";
+            this.ExportMenu.Size = new System.Drawing.Size(182, 24);
+            this.ExportMenu.Text = "Экспорт";
+            // 
+            // XmlMenu
+            // 
+            this.XmlMenu.Image = global::TestCreator.Properties.Resources.man;
+            this.XmlMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.XmlMenu.Name = "XmlMenu";
+            this.XmlMenu.Size = new System.Drawing.Size(180, 24);
+            this.XmlMenu.Text = "в формат Xml";
+            this.XmlMenu.Click += new System.EventHandler(this.XmlMenu_Click);
+            // 
+            // JsonMenu
+            // 
+            this.JsonMenu.Image = global::TestCreator.Properties.Resources.xcf;
+            this.JsonMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.JsonMenu.Name = "JsonMenu";
+            this.JsonMenu.Size = new System.Drawing.Size(180, 24);
+            this.JsonMenu.Text = "в формат Json";
+            this.JsonMenu.Click += new System.EventHandler(this.JsonMenu_Click);
             // 
             // imList
             // 
@@ -360,5 +400,9 @@
         private ToolStripMenuItem RemoveAllMenu;
         private ToolStripMenuItem DopMenu;
         private ToolStripMenuItem PropertyMenu;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem ExportMenu;
+        private ToolStripMenuItem XmlMenu;
+        private ToolStripMenuItem JsonMenu;
     }
 }

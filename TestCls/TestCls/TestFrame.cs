@@ -1,9 +1,16 @@
-﻿using ProtoBuf;
+﻿using Newtonsoft.Json;
+using ProtoBuf;
+using System.Text;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace TestCls
 {
-    [ProtoContract(SkipConstructor = true)]
-    public partial class TestFrame : object
+    [ProtoContract]
+    public partial class TestFrame : object, IXmlSerializable
     {
         #region[Свойства]
 
@@ -24,13 +31,19 @@ namespace TestCls
 
         #endregion
 
-        #region[Коструктор]
+        #region[Кострукторы]
 
-        public TestFrame(string name, bool multione)
+        public TestFrame(string name, bool multione) : this()
         {
             NameTest = name;
             Multione = multione;
+        }
+
+        public TestFrame()
+        {
+            NameTest = string.Empty;
             PathTest = string.Empty;
+            Multione = default;
             Count = 0;
             List = new Dictionary<Guid, Ask>();
         }
@@ -93,6 +106,107 @@ namespace TestCls
             Count = 0;
         }
 
+        public XmlSchema? GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            Queue<(Guid id, string quest, (string name, bool state)[] variants)> asks = new();
+
+            XDocument document = XDocument.Load(reader);
+            IEnumerable<XElement> quest = document.Descendants("Quest");
+            IEnumerable<string> settings = from XAttribute item in document.Descendants("Settings").Attributes()
+                                           select item.Value;
+
+            foreach (XElement element in quest)
+            {
+                string value = element.Attribute("Item")!.Value;
+                Guid id = Guid.Parse(element.Attribute("ID")!.Value);
+                (string name, bool state)[] variants = new (string, bool)[element.Elements().Count()];
+                int count = 0;
+
+                foreach (XElement child in element.Elements())
+                {
+                    variants[count].name = child.Value;
+                    variants[count].state = child.Attribute("State")!.Value.To<bool>();
+                    count++;
+                }
+
+                asks.Enqueue((id, value, variants));
+            }
+
+            UpdateList(asks);
+
+            NameTest = settings.ElementAt(0).ToString();
+            PathTest = settings.ElementAt(1).ToString();
+            Multione = settings.ElementAt(2).ToString().To<bool>();
+            Count = settings.ElementAt(3).ToString().To<int>();
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            GetXml().Save(writer);
+        }
+
+        public string GetJson()
+            => JsonConvert.SerializeXNode(GetXml(), Formatting.Indented);
+
+        public override string? ToString()
+        {
+            StringBuilder result = new($"Имя - {NameTest}");
+            result.Append('\n');
+            result.Append($"Сохранен - {PathTest}");
+            result.Append('\n');
+            result.Append($"Несколько вариантов ответа - {Multione}");
+            result.Append('\n');
+            result.Append($"Количество вопросов - {Count}");
+
+            return result.ToString();
+        }
+
+        private XDocument GetXml()
+        {
+            IEnumerable<Ask> items = from item in List.Values
+                                     select item;
+
+            XDocument document = new();
+            XElement root = new("Frame", new XElement("Settings",
+                                new XAttribute("Name", NameTest),
+                                new XAttribute("Path", PathTest),
+                                new XAttribute("MultiOne", Multione),
+                                new XAttribute("Count", Count)));
+            XElement list = new("Ask");
+
+            foreach (Ask ask in items)
+            {
+                XElement quest = new("Quest",
+                                     new XAttribute("Item", ask.Name),
+                                     new XAttribute("ID", ask.Guid));
+                foreach ((string name, bool state) in ask.GetVariants())
+                {
+                    XElement variant = new("Variant", name,
+                                           new XAttribute("State", state));
+                    quest.Add(variant);
+                }
+
+                list.Add(quest);
+            }
+            root.Add(list);
+            document.Add(root);
+            return document;
+        }
+
+        private void UpdateList(Queue<(Guid id, string quest, (string name, bool state)[] variants)> values)
+        {
+            foreach ((Guid id, string quest, (string name, bool state)[] variants) item in values)
+            {
+                Ask ask = new(item);
+                List.Add(ask.Guid, ask);
+            }
+        }
+
         #endregion
 
         #region[Струтура вопрос\варианты ответа]
@@ -112,13 +226,22 @@ namespace TestCls
             [ProtoMember(4, Name = "Варианты")]
             private Variant[] Variants { get; set; }
 
-            public Ask(string name, (string var, bool state)[] variants) : this()
+            public Ask(string name, (string var, bool state)[] variants)
             {
                 Name = name;
                 Guid = Guid.NewGuid();
                 Variants = Array.ConvertAll<(string name, bool state), Variant>(variants,
                                                                                  a => new Variant(a));
                 Count = Variants.Length;
+            }
+
+            public Ask((Guid id, string quest, (string name, bool state)[] variants) ask)
+            {
+                Guid = ask.id;
+                Name = ask.quest;
+                Count = ask.variants.Length;
+                Variants = Array.ConvertAll(ask.variants,
+                                            x => new Variant(x));
             }
 
             public (string var, bool state)[] GetVariants()
@@ -135,7 +258,7 @@ namespace TestCls
                 [ProtoMember(2, Name = "Булево")]
                 public bool State { get; set; }
 
-                public Variant((string name, bool state) tuple) : this()
+                public Variant((string name, bool state) tuple)
                 {
                     Name = tuple.name;
                     State = tuple.state;

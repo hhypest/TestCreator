@@ -163,6 +163,26 @@ namespace TestCreator.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap loopnone {
+            get {
+                object obj = ResourceManager.GetObject("loopnone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap man {
+            get {
+                object obj = ResourceManager.GetObject("man", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap new_window {
             get {
                 object obj = ResourceManager.GetObject("new_window", resourceCulture);
@@ -216,6 +236,16 @@ namespace TestCreator.Properties {
         internal static System.Drawing.Bitmap tutorials {
             get {
                 object obj = ResourceManager.GetObject("tutorials", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap xcf {
+            get {
+                object obj = ResourceManager.GetObject("xcf", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

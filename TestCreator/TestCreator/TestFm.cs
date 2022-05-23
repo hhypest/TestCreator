@@ -1,4 +1,6 @@
 ﻿using ProtoBuf;
+using System.Text;
+using System.Xml;
 using TestCls;
 
 namespace TestCreator
@@ -161,6 +163,52 @@ namespace TestCreator
 
             foreach (KeyValuePair<Guid, string> item in result)
                 AskTree.Nodes.Add(item.Value).Tag = item.Key;
+        }
+
+        private void XmlMenu_Click(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFile = new()
+            {
+                Title = $"Куда экспортировать тест - <{Test.NameTest}>",
+                FileName = Test.NameTest,
+                Filter = "Xml файл|*.xml",
+                RestoreDirectory = true,
+                OverwritePrompt = true
+            };
+            if (saveFile.ShowDialog() != DialogResult.OK)
+                return;
+
+            XmlWriterSettings settings = new()
+            {
+                Indent = true,
+                ConformanceLevel = ConformanceLevel.Document,
+                CheckCharacters = true,
+                Encoding = Encoding.UTF8,
+                NewLineOnAttributes = true
+            };
+
+            using FileStream stream = new(saveFile.FileName, FileMode.Create, FileAccess.Write);
+            using XmlWriter writer = XmlWriter.Create(stream, settings);
+            Test.WriteXml(writer);
+        }
+
+        private void JsonMenu_Click(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFile = new()
+            {
+                Title = $"Куда экспортировать тест - <{Test.NameTest}>",
+                FileName = Test.NameTest,
+                Filter = "Json файл|*.json",
+                RestoreDirectory = true,
+                OverwritePrompt = true
+            };
+            if (saveFile.ShowDialog() != DialogResult.OK)
+                return;
+
+            byte[] json = Encoding.UTF8.GetBytes(Test.GetJson());
+            using FileStream stream = new(saveFile.FileName, FileMode.Create, FileAccess.Write);
+            stream.Position = 0;
+            stream.Write(json, 0, json.Length);
         }
     }
 }

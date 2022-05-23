@@ -58,7 +58,7 @@ namespace TestCreator
 
         private void OpenTestMenu_Click(object sender, EventArgs e)
         {
-            using OpenFileDialog openFileDialog = new()
+            using OpenFileDialog openFile = new()
             {
                 RestoreDirectory = true,
                 Filter = "Тест|*.test",
@@ -67,10 +67,10 @@ namespace TestCreator
                 Title = "Какой тест открыть?"
             };
 
-            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            if (openFile.ShowDialog() != DialogResult.OK)
                 return;
 
-            TestFm child = new(openFileDialog.FileName) { MdiParent = this };
+            TestFm child = new(openFile.FileName) { MdiParent = this };
             child.Show();
 
             NameTool.Text = child.Test.NameTest;
@@ -84,7 +84,7 @@ namespace TestCreator
             if (child == null)
                 return;
 
-            using SaveFileDialog saveFileDialog = new()
+            using SaveFileDialog saveFile = new()
             {
                 RestoreDirectory = true,
                 Filter = "Тест|*.test",
@@ -92,13 +92,13 @@ namespace TestCreator
                 Title = $"Куда сохранить тест <{child.Test.NameTest}>"
             };
 
-            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            if (saveFile.ShowDialog() != DialogResult.OK)
                 return;
 
-            child.Test.PathTest = saveFileDialog.FileName;
-            child.SaveTest(saveFileDialog.FileName);
+            child.Test.PathTest = saveFile.FileName;
+            child.SaveTest(saveFile.FileName);
 
-            PathTool.Text = saveFileDialog.FileName;
+            PathTool.Text = saveFile.FileName;
         }
 
         private void SaveTestMenu_Click(object sender, EventArgs e)
