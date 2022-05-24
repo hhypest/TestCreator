@@ -1,4 +1,4 @@
-namespace Tester
+п»їnamespace Tester
 {
     internal partial class MainFm : Form
     {
@@ -17,11 +17,11 @@ namespace Tester
         {
             using OpenFileDialog openFile = new()
             {
-                Title = "Какой тест открыть?",
+                Title = "РљР°РєРѕР№ С‚РµСЃС‚ РѕС‚РєСЂС‹С‚СЊ?",
                 RestoreDirectory = true,
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Filter = "Тест|*.test"
+                Filter = "РўРµСЃС‚|*.test"
             };
 
             if (openFile.ShowDialog() != DialogResult.OK)
