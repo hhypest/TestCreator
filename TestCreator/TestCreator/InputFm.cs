@@ -9,10 +9,10 @@ namespace TestCreator
             InitializeComponent();
         }
 
-        internal IEnumerable<string> GetInputs()
+        internal IEnumerable<ListViewItem> GetInputs()
             => from string input in VarBox.Lines
                where input != string.Empty
-               select input;
+               select new ListViewItem(input);
 
         private void CancelButt_Click(object sender, EventArgs e)
         {

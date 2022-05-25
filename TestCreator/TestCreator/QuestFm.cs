@@ -42,9 +42,7 @@
                 return;
             }
 
-            foreach (string key in dialog.GetInputs())
-                VariantList.Items.Add(key);
-
+            VariantList.Items.AddRange(dialog.GetInputs().ToArray());
             Visible = true;
         }
 

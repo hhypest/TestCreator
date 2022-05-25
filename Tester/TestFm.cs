@@ -6,9 +6,12 @@ namespace Tester
     internal partial class TestFm : Form
     {
         private int Count { get; set; }
+
         private TestFrame Test { get; set; }
-        private readonly Queue<(string ask, (string name, bool state)[] variant)> failask;
-        private readonly List<(string ask, (string name, bool state)[] variant)> list;
+
+        private Queue<(string ask, (string name, bool state)[] variant)> Failask { get; }
+
+        private List<(string ask, (string name, bool state)[] variant)> List { get; }
 
         internal TestFm(string path)
         {
@@ -20,11 +23,11 @@ namespace Tester
             NameTool.Text = $"<{Test.NameTest}>";
             CountTool.Text = $"Осталось вопросов {Count} из {Test.Count}";
 
-            list = new List<(string ask, (string name, bool state)[] variant)>();
-            failask = new Queue<(string ask, (string name, bool state)[] variant)>();
+            List = new List<(string ask, (string name, bool state)[] variant)>();
+            Failask = new Queue<(string ask, (string name, bool state)[] variant)>();
 
             foreach (KeyValuePair<string, (string name, bool state)[]> key in Test.GetTesterList())
-                list.Add((key.Key, key.Value));
+                List.Add((key.Key, key.Value));
 
             ShowAsk();
         }
@@ -33,7 +36,7 @@ namespace Tester
             => Test.Count;
 
         internal ParallelQuery<(string, (string, bool)[])> GetResult()
-            => failask.AsParallel();
+            => Failask.AsParallel();
 
         private static int GetIndex(int min, int max)
             => new Random().Next(min, max);
@@ -41,14 +44,12 @@ namespace Tester
         private (string ask, (string name, bool state)[] variant) NextAsk()
         {
             if (Count == 0)
-            {
-                return list[0];
-            }
+                return List[0];
 
             int index = GetIndex(0, Count);
             Count--;
-            (string ask, (string name, bool state)[] variant) = list[index];
-            list.RemoveAt(index);
+            (string ask, (string name, bool state)[] variant) = List[index];
+            List.RemoveAt(index);
             return (ask, variant);
         }
 
@@ -66,7 +67,7 @@ namespace Tester
         private bool GetCheck()
         {
             IEnumerable<ListViewItem> check = from item in QuestList.Items.Cast<ListViewItem>()
-                                              where item.Checked == true & (bool)item.Tag == true & item.Checked == (bool)item.Tag
+                                              where item.Checked && (bool)item.Tag && item.Checked == (bool)item.Tag
                                               select item;
             return check.Any();
         }
@@ -74,13 +75,13 @@ namespace Tester
         private void NextButt_Click(object sender, EventArgs e)
         {
             if (!GetCheck())
-                failask.Enqueue(((string ask, (string name, bool state)[] variant))AskLabel.Tag);
+                Failask.Enqueue(((string ask, (string name, bool state)[] variant))AskLabel.Tag);
 
             AskLabel.Text = string.Empty;
             AskLabel.Tag = null;
             QuestList.Items.Clear();
 
-            if (list.Count < 1)
+            if (List.Count < 1)
             {
                 Close();
                 return;

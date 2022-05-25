@@ -7,7 +7,7 @@ namespace TestCreator
 {
     internal partial class TestFm : Form
     {
-        internal TestFrame Test;
+        internal TestFrame Test { get; set; }
 
         internal TestFm(string name, bool state)
         {
@@ -50,9 +50,7 @@ namespace TestCreator
         }
 
         private void AskTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            EditAskMenu_Click(sender, e);
-        }
+            => EditAskMenu_Click(sender, e);
 
         private void EditAskMenu_Click(object sender, EventArgs e)
         {

@@ -10,7 +10,7 @@ using Formatting = Newtonsoft.Json.Formatting;
 namespace TestCls
 {
     [ProtoContract]
-    public partial class TestFrame : object, IXmlSerializable
+    public class TestFrame : object, IXmlSerializable
     {
         #region[Свойства]
 
@@ -56,7 +56,9 @@ namespace TestCls
         {
             Ask ask = new(asks, variants);
             if (!List.ContainsKey(ask.Guid))
+            {
                 List.Add(ask.Guid, ask);
+            }
             else
             {
                 List.Remove(ask.Guid);
@@ -70,7 +72,9 @@ namespace TestCls
         {
             Ask ask = new(newitem.asks, newitem.variants);
             if (!List.ContainsKey(ask.Guid))
+            {
                 List.Add(ask.Guid, ask);
+            }
             else
             {
                 List.Remove(ask.Guid);
@@ -107,9 +111,7 @@ namespace TestCls
         }
 
         public XmlSchema? GetSchema()
-        {
-            return null;
-        }
+            => null;
 
         public void ReadXml(XmlReader reader)
         {
@@ -139,10 +141,10 @@ namespace TestCls
 
             UpdateList(asks);
 
-            NameTest = settings.ElementAt(0).ToString();
-            PathTest = settings.ElementAt(1).ToString();
-            Multione = settings.ElementAt(2).ToString().To<bool>();
-            Count = settings.ElementAt(3).ToString().To<int>();
+            NameTest = settings.ElementAt(0);
+            PathTest = settings.ElementAt(1);
+            Multione = settings.ElementAt(2).To<bool>();
+            Count = settings.ElementAt(3).To<int>();
         }
 
         public void WriteXml(XmlWriter writer)
@@ -157,11 +159,11 @@ namespace TestCls
         {
             StringBuilder result = new($"Имя - {NameTest}");
             result.Append('\n');
-            result.Append($"Сохранен - {PathTest}");
+            result.Append("Сохранен - ").Append(PathTest);
             result.Append('\n');
-            result.Append($"Несколько вариантов ответа - {Multione}");
+            result.Append("Несколько вариантов ответа - ").Append(Multione);
             result.Append('\n');
-            result.Append($"Количество вопросов - {Count}");
+            result.Append("Количество вопросов - ").Append(Count);
 
             return result.ToString();
         }
@@ -171,7 +173,7 @@ namespace TestCls
             IEnumerable<Ask> items = from item in List.Values
                                      select item;
 
-            XDocument document = new();
+            XDocument document = new(new XDeclaration("1.0", "utf-8", null));
             XElement root = new("Frame", new XElement("Settings",
                                 new XAttribute("Name", NameTest),
                                 new XAttribute("Path", PathTest),
@@ -224,14 +226,14 @@ namespace TestCls
             public int Count { get; set; }
 
             [ProtoMember(4, Name = "Варианты")]
-            private Variant[] Variants { get; set; }
+            private Variant[] Variants { get; }
 
             public Ask(string name, (string var, bool state)[] variants)
             {
                 Name = name;
                 Guid = Guid.NewGuid();
                 Variants = Array.ConvertAll<(string name, bool state), Variant>(variants,
-                                                                                 a => new Variant(a));
+                                                                                 valueTuple => new Variant(valueTuple));
                 Count = Variants.Length;
             }
 
@@ -245,7 +247,8 @@ namespace TestCls
             }
 
             public (string var, bool state)[] GetVariants()
-                => Array.ConvertAll(Variants, a => a.GetVariant());
+                => Array.ConvertAll(Variants,
+                                    valueTuple => valueTuple.GetVariant());
 
             #region[Структура вариант ответа]
 
