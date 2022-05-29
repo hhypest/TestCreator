@@ -38,18 +38,11 @@
             this.NewAskMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.EditAskMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.SortMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.SortAZMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.SortZAMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.RemoveAskMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveAllMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.DopMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.PropertyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.ExportMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.XmlMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.JsonMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.imList = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -113,8 +106,6 @@
             this.NewAskMenu,
             this.EditAskMenu,
             this.toolStripSeparator1,
-            this.SortMenu,
-            this.toolStripSeparator2,
             this.RemoveAskMenu,
             this.RemoveAllMenu});
             this.EditMenu.Name = "EditMenu";
@@ -144,39 +135,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(226, 6);
             // 
-            // SortMenu
-            // 
-            this.SortMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SortAZMenu,
-            this.SortZAMenu});
-            this.SortMenu.Image = global::TestCreator.Properties.Resources.agt_reload;
-            this.SortMenu.Name = "SortMenu";
-            this.SortMenu.Size = new System.Drawing.Size(229, 24);
-            this.SortMenu.Text = "Сортировка";
-            // 
-            // SortAZMenu
-            // 
-            this.SortAZMenu.Image = global::TestCreator.Properties.Resources.agt_update_misc;
-            this.SortAZMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SortAZMenu.Name = "SortAZMenu";
-            this.SortAZMenu.Size = new System.Drawing.Size(278, 24);
-            this.SortAZMenu.Text = "Сортировать во возрастанию";
-            this.SortAZMenu.Click += new System.EventHandler(this.SortAZMenu_Click);
-            // 
-            // SortZAMenu
-            // 
-            this.SortZAMenu.Image = global::TestCreator.Properties.Resources.agt_uninstall_product;
-            this.SortZAMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SortZAMenu.Name = "SortZAMenu";
-            this.SortZAMenu.Size = new System.Drawing.Size(278, 24);
-            this.SortZAMenu.Text = "Сортировать по убыванию";
-            this.SortZAMenu.Click += new System.EventHandler(this.SortZAMenu_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(226, 6);
-            // 
             // RemoveAskMenu
             // 
             this.RemoveAskMenu.Image = global::TestCreator.Properties.Resources.editdelete;
@@ -197,8 +155,7 @@
             // 
             this.DopMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.PropertyMenu,
-            this.toolStripSeparator3,
-            this.ExportMenu});
+            this.toolStripSeparator3});
             this.DopMenu.Name = "DopMenu";
             this.DopMenu.Size = new System.Drawing.Size(129, 23);
             this.DopMenu.Text = "&Дополнительно";
@@ -216,35 +173,6 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(179, 6);
-            // 
-            // ExportMenu
-            // 
-            this.ExportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.XmlMenu,
-            this.JsonMenu});
-            this.ExportMenu.Image = global::TestCreator.Properties.Resources.loopnone;
-            this.ExportMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ExportMenu.Name = "ExportMenu";
-            this.ExportMenu.Size = new System.Drawing.Size(182, 24);
-            this.ExportMenu.Text = "Экспорт";
-            // 
-            // XmlMenu
-            // 
-            this.XmlMenu.Image = global::TestCreator.Properties.Resources.man;
-            this.XmlMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.XmlMenu.Name = "XmlMenu";
-            this.XmlMenu.Size = new System.Drawing.Size(180, 24);
-            this.XmlMenu.Text = "в формат Xml";
-            this.XmlMenu.Click += new System.EventHandler(this.XmlMenu_Click);
-            // 
-            // JsonMenu
-            // 
-            this.JsonMenu.Image = global::TestCreator.Properties.Resources.xcf;
-            this.JsonMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.JsonMenu.Name = "JsonMenu";
-            this.JsonMenu.Size = new System.Drawing.Size(180, 24);
-            this.JsonMenu.Text = "в формат Json";
-            this.JsonMenu.Click += new System.EventHandler(this.JsonMenu_Click);
             // 
             // imList
             // 
@@ -392,17 +320,10 @@
         private ToolStripMenuItem NewAskMenu;
         private ToolStripMenuItem EditAskMenu;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripMenuItem SortMenu;
-        private ToolStripMenuItem SortAZMenu;
-        private ToolStripMenuItem SortZAMenu;
-        private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem RemoveAskMenu;
         private ToolStripMenuItem RemoveAllMenu;
         private ToolStripMenuItem DopMenu;
         private ToolStripMenuItem PropertyMenu;
         private ToolStripSeparator toolStripSeparator3;
-        private ToolStripMenuItem ExportMenu;
-        private ToolStripMenuItem XmlMenu;
-        private ToolStripMenuItem JsonMenu;
     }
 }

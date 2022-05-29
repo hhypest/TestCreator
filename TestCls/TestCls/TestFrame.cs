@@ -115,36 +115,7 @@ namespace TestCls
 
         public void ReadXml(XmlReader reader)
         {
-            Queue<(Guid id, string quest, (string name, bool state)[] variants)> asks = new();
-
-            XDocument document = XDocument.Load(reader);
-            IEnumerable<XElement> quest = document.Descendants("Quest");
-            IEnumerable<string> settings = from XAttribute item in document.Descendants("Settings").Attributes()
-                                           select item.Value;
-
-            foreach (XElement element in quest)
-            {
-                string value = element.Attribute("Item")!.Value;
-                Guid id = Guid.Parse(element.Attribute("ID")!.Value);
-                (string name, bool state)[] variants = new (string, bool)[element.Elements().Count()];
-                int count = 0;
-
-                foreach (XElement child in element.Elements())
-                {
-                    variants[count].name = child.Value;
-                    variants[count].state = child.Attribute("State")!.Value.To<bool>();
-                    count++;
-                }
-
-                asks.Enqueue((id, value, variants));
-            }
-
-            UpdateList(asks);
-
-            NameTest = settings.ElementAt(0);
-            PathTest = settings.ElementAt(1);
-            Multione = settings.ElementAt(2).To<bool>();
-            Count = settings.ElementAt(3).To<int>();
+            SetXml(XDocument.Load(reader));
         }
 
         public void WriteXml(XmlWriter writer)
@@ -154,6 +125,9 @@ namespace TestCls
 
         public string GetJson()
             => JsonConvert.SerializeXNode(GetXml(), Formatting.Indented);
+
+        public void SetJson(string json)
+            => SetXml(JsonConvert.DeserializeXNode(json)!);
 
         public override string? ToString()
         {
@@ -198,6 +172,39 @@ namespace TestCls
             root.Add(list);
             document.Add(root);
             return document;
+        }
+
+        private void SetXml(XDocument document)
+        {
+            Queue<(Guid id, string quest, (string name, bool state)[] variants)> asks = new();
+
+            IEnumerable<XElement> quest = document.Descendants("Quest");
+            IEnumerable<string> settings = from XAttribute item in document.Descendants("Settings").Attributes()
+                                           select item.Value;
+
+            foreach (XElement element in quest)
+            {
+                string value = element.Attribute("Item")!.Value;
+                Guid id = Guid.Parse(element.Attribute("ID")!.Value);
+                (string name, bool state)[] variants = new (string, bool)[element.Elements().Count()];
+                int count = 0;
+
+                foreach (XElement child in element.Elements())
+                {
+                    variants[count].name = child.Value;
+                    variants[count].state = child.Attribute("State")!.Value.To<bool>();
+                    count++;
+                }
+
+                asks.Enqueue((id, value, variants));
+            }
+
+            UpdateList(asks);
+
+            NameTest = settings.ElementAt(0);
+            PathTest = settings.ElementAt(1);
+            Multione = settings.ElementAt(2).To<bool>();
+            Count = settings.ElementAt(3).To<int>();
         }
 
         private void UpdateList(Queue<(Guid id, string quest, (string name, bool state)[] variants)> values)

@@ -38,6 +38,13 @@
             this.SaveAsTestMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveTestMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ExportMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.XmlEx = new System.Windows.Forms.ToolStripMenuItem();
+            this.JsonEx = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.XmlImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.JsonImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.MainStatusBar = new System.Windows.Forms.StatusStrip();
             this.NameTool = new System.Windows.Forms.ToolStripStatusLabel();
@@ -65,6 +72,9 @@
             this.toolStripSeparator1,
             this.SaveMenu,
             this.toolStripSeparator2,
+            this.ExportMenu,
+            this.ImportMenu,
+            this.toolStripSeparator3,
             this.ExitMenu});
             this.FileMenu.Name = "FileMenu";
             this.FileMenu.Size = new System.Drawing.Size(58, 23);
@@ -75,7 +85,7 @@
             this.NewTestMenu.Image = global::TestCreator.Properties.Resources.new_window;
             this.NewTestMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.NewTestMenu.Name = "NewTestMenu";
-            this.NewTestMenu.Size = new System.Drawing.Size(169, 24);
+            this.NewTestMenu.Size = new System.Drawing.Size(180, 24);
             this.NewTestMenu.Text = "Новый тест";
             this.NewTestMenu.Click += new System.EventHandler(this.NewTestMenu_Click);
             // 
@@ -84,14 +94,14 @@
             this.OpenTestMenu.Image = global::TestCreator.Properties.Resources.fileopen;
             this.OpenTestMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.OpenTestMenu.Name = "OpenTestMenu";
-            this.OpenTestMenu.Size = new System.Drawing.Size(169, 24);
+            this.OpenTestMenu.Size = new System.Drawing.Size(180, 24);
             this.OpenTestMenu.Text = "Открыть тест";
             this.OpenTestMenu.Click += new System.EventHandler(this.OpenTestMenu_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // SaveMenu
             // 
@@ -102,7 +112,7 @@
             this.SaveMenu.Image = global::TestCreator.Properties.Resources.save_all;
             this.SaveMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.SaveMenu.Name = "SaveMenu";
-            this.SaveMenu.Size = new System.Drawing.Size(169, 24);
+            this.SaveMenu.Size = new System.Drawing.Size(180, 24);
             this.SaveMenu.Text = "Сохранить...";
             // 
             // SaveAsTestMenu
@@ -127,14 +137,78 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // ExportMenu
+            // 
+            this.ExportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.XmlEx,
+            this.JsonEx});
+            this.ExportMenu.Enabled = false;
+            this.ExportMenu.Image = global::TestCreator.Properties.Resources.agt_reload;
+            this.ExportMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ExportMenu.Name = "ExportMenu";
+            this.ExportMenu.Size = new System.Drawing.Size(180, 24);
+            this.ExportMenu.Text = "Экспорт";
+            // 
+            // XmlEx
+            // 
+            this.XmlEx.Image = global::TestCreator.Properties.Resources.xcf;
+            this.XmlEx.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.XmlEx.Name = "XmlEx";
+            this.XmlEx.Size = new System.Drawing.Size(170, 24);
+            this.XmlEx.Text = "в Xml формат";
+            this.XmlEx.Click += new System.EventHandler(this.XmlEx_Click);
+            // 
+            // JsonEx
+            // 
+            this.JsonEx.Image = global::TestCreator.Properties.Resources.texteffect;
+            this.JsonEx.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.JsonEx.Name = "JsonEx";
+            this.JsonEx.Size = new System.Drawing.Size(170, 24);
+            this.JsonEx.Text = "в Json формат";
+            this.JsonEx.Click += new System.EventHandler(this.JsonEx_Click);
+            // 
+            // ImportMenu
+            // 
+            this.ImportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.XmlImport,
+            this.JsonImport});
+            this.ImportMenu.Image = global::TestCreator.Properties.Resources.tutorials;
+            this.ImportMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ImportMenu.Name = "ImportMenu";
+            this.ImportMenu.Size = new System.Drawing.Size(180, 24);
+            this.ImportMenu.Text = "Импорт";
+            // 
+            // XmlImport
+            // 
+            this.XmlImport.Image = global::TestCreator.Properties.Resources.xcf;
+            this.XmlImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.XmlImport.Name = "XmlImport";
+            this.XmlImport.Size = new System.Drawing.Size(180, 24);
+            this.XmlImport.Text = "из Xml файла";
+            this.XmlImport.Click += new System.EventHandler(this.XmlImport_Click);
+            // 
+            // JsonImport
+            // 
+            this.JsonImport.Image = global::TestCreator.Properties.Resources.texteffect;
+            this.JsonImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.JsonImport.Name = "JsonImport";
+            this.JsonImport.Size = new System.Drawing.Size(180, 24);
+            this.JsonImport.Text = "из Json файла";
+            this.JsonImport.Click += new System.EventHandler(this.JsonImport_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // ExitMenu
             // 
             this.ExitMenu.Image = global::TestCreator.Properties.Resources.exit;
             this.ExitMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ExitMenu.Name = "ExitMenu";
-            this.ExitMenu.Size = new System.Drawing.Size(169, 24);
+            this.ExitMenu.Size = new System.Drawing.Size(180, 24);
             this.ExitMenu.Text = "Выход";
             this.ExitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
@@ -207,5 +281,12 @@
         private StatusStrip MainStatusBar;
         private ToolStripStatusLabel NameTool;
         private ToolStripStatusLabel PathTool;
+        private ToolStripMenuItem ExportMenu;
+        private ToolStripMenuItem XmlEx;
+        private ToolStripMenuItem JsonEx;
+        private ToolStripMenuItem ImportMenu;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem XmlImport;
+        private ToolStripMenuItem JsonImport;
     }
 }

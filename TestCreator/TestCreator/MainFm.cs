@@ -1,7 +1,17 @@
-﻿namespace TestCreator
+﻿using System.Text;
+using System.Xml;
+
+namespace TestCreator
 {
     internal partial class MainFm : Form
     {
+        private enum FileFormat : byte
+        {
+            test = 0,
+            xml = 1,
+            json = 2
+        }
+
         internal MainFm()
         {
             InitializeComponent();
@@ -17,6 +27,7 @@
                 PathTool.Text = "Открытых тестов нет";
 
                 SaveMenu.Enabled = false;
+                ExportMenu.Enabled = false;
                 return;
             }
 
@@ -37,6 +48,39 @@
 
             SaveMenu.Enabled = true;
             SaveTestMenu.Enabled = true;
+            ExportMenu.Enabled = true;
+        }
+
+        private static string SavePath(FileFormat format)
+        {
+            using SaveFileDialog saveFile = new()
+            {
+                RestoreDirectory = true,
+                Title = "Куда сохранить тест?",
+                Filter = $"{format} файл|*.{format}"
+            };
+
+            if (saveFile.ShowDialog() != DialogResult.OK)
+                return string.Empty;
+
+            return saveFile.FileName;
+        }
+
+        private static string OpenPath(FileFormat format)
+        {
+            using OpenFileDialog openFile = new()
+            {
+                RestoreDirectory = true,
+                Filter = $"{format} файл|*.{format}",
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = "Какой тест открыть?"
+            };
+
+            if (openFile.ShowDialog() != DialogResult.OK)
+                return string.Empty;
+
+            return openFile.FileName;
         }
 
         private void ExitMenu_Click(object sender, EventArgs e)
@@ -58,19 +102,13 @@
 
         private void OpenTestMenu_Click(object sender, EventArgs e)
         {
-            using OpenFileDialog openFile = new()
-            {
-                RestoreDirectory = true,
-                Filter = "Тест|*.test",
-                CheckFileExists = true,
-                CheckPathExists = true,
-                Title = "Какой тест открыть?"
-            };
+            const FileFormat format = FileFormat.test;
+            string path = OpenPath(format);
 
-            if (openFile.ShowDialog() != DialogResult.OK)
+            if (string.IsNullOrEmpty(path))
                 return;
 
-            TestFm child = new(openFile.FileName) { MdiParent = this };
+            TestFm child = new(path) { MdiParent = this };
             child.Show();
 
             NameTool.Text = child.Test.NameTest;
@@ -84,21 +122,15 @@
             if (child == null)
                 return;
 
-            using SaveFileDialog saveFile = new()
-            {
-                RestoreDirectory = true,
-                Filter = "Тест|*.test",
-                FileName = $"{child.Test.NameTest}",
-                Title = $"Куда сохранить тест <{child.Test.NameTest}>"
-            };
+            const FileFormat format = FileFormat.test;
+            string path = SavePath(format);
 
-            if (saveFile.ShowDialog() != DialogResult.OK)
+            if (string.IsNullOrEmpty(path))
                 return;
 
-            child.Test.PathTest = saveFile.FileName;
-            child.SaveTest(saveFile.FileName);
-
-            PathTool.Text = saveFile.FileName;
+            child.Test.PathTest = path;
+            child.SaveTest(path);
+            PathTool.Text = path;
         }
 
         private void SaveTestMenu_Click(object sender, EventArgs e)
@@ -109,6 +141,91 @@
                 return;
 
             child.SaveTest(child.Test.PathTest);
+        }
+
+        private void XmlEx_Click(object sender, EventArgs e)
+        {
+            TestFm child = (TestFm)ActiveMdiChild;
+
+            if (child == null)
+                return;
+
+            const FileFormat format = FileFormat.xml;
+            string path = SavePath(format);
+
+            if (string.IsNullOrEmpty(path))
+                return;
+
+            XmlWriterSettings settings = new()
+            {
+                ConformanceLevel = ConformanceLevel.Document,
+                Indent = true,
+                NewLineOnAttributes = true
+            };
+
+            using FileStream stream = new(path, FileMode.Create, FileAccess.Write);
+            using XmlWriter writer = XmlWriter.Create(stream, settings);
+            child.Test.WriteXml(writer);
+        }
+
+        private void JsonEx_Click(object sender, EventArgs e)
+        {
+            TestFm child = (TestFm)ActiveMdiChild;
+
+            if (child == null)
+                return;
+
+            const FileFormat format = FileFormat.json;
+            string path = SavePath(format);
+
+            if (string.IsNullOrEmpty(path))
+                return;
+
+            byte[] data = Encoding.UTF8.GetBytes(child.Test.GetJson());
+            using FileStream stream = new(path, FileMode.Create, FileAccess.Write);
+            stream.Position = 0;
+            stream.Write(data, 0, data.Length);
+        }
+
+        private void XmlImport_Click(object sender, EventArgs e)
+        {
+            const FileFormat format = FileFormat.xml;
+            string path = OpenPath(format);
+
+            if (string.IsNullOrEmpty(path))
+                return;
+
+            XmlReaderSettings settings = new()
+            {
+                ConformanceLevel = ConformanceLevel.Document
+            };
+
+            using FileStream stream = new(path, FileMode.Open, FileAccess.Read);
+            using XmlReader reader = XmlReader.Create(stream, settings);
+
+            TestFm child = new() { MdiParent = this };
+            child.Test.ReadXml(reader);
+            child.UpdateTree();
+            child.Show();
+        }
+
+        private void JsonImport_Click(object sender, EventArgs e)
+        {
+            const FileFormat format = FileFormat.json;
+            string path = OpenPath(format);
+
+            if (string.IsNullOrEmpty(path))
+                return;
+
+            using FileStream stream = new(path, FileMode.Open, FileAccess.Read);
+            stream.Position = 0;
+            byte[] data = new byte[stream.Length];
+            stream.Read(data, 0, data.Length);
+
+            TestFm child = new() { MdiParent = this};
+            child.Test.SetJson(Encoding.UTF8.GetString(data));
+            child.UpdateTree();
+            child.Show();
         }
     }
 }
