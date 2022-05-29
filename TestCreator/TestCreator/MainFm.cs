@@ -222,7 +222,7 @@ namespace TestCreator
             byte[] data = new byte[stream.Length];
             stream.Read(data, 0, data.Length);
 
-            TestFm child = new() { MdiParent = this};
+            TestFm child = new() { MdiParent = this };
             child.Test.SetJson(Encoding.UTF8.GetString(data));
             child.UpdateTree();
             child.Show();
