@@ -13,9 +13,7 @@ namespace TestCreator
         }
 
         internal MainFm()
-        {
-            InitializeComponent();
-        }
+            => InitializeComponent();
 
         internal void MainFm_MdiChildActivate(object sender, EventArgs e)
         {
